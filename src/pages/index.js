@@ -3,7 +3,10 @@ import { Helmet } from 'react-helmet';
 import '../styles/index.css';
 
 function Index() {
-  document || console.log('document.referrer', document.referrer)
+  const isSSR = typeof window === "undefined"
+  if (!isSSR) {
+    console.log('document.referrer', document.referrer);
+  }
   const [date, setDate] = useState(null);
   useEffect(() => {
     async function getDate() {
