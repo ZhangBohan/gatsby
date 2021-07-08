@@ -3,7 +3,7 @@ const axios = require('axios');
 
 export default async (req, res) => {
     console.log(req.body);
-    const { baseUrl, appId, appKey, code } = req.body;
+    const { baseUrl, appId, appSecret, code } = req.body;
 
     // 鉴权
     const tokenRes = await axios.post(baseUrl + 'api/openapi/v1/auth/getAccessToken', {

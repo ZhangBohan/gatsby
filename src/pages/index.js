@@ -18,6 +18,12 @@ function Index() {
 
 
   useEffect(() => {
+    async function getDate() {
+      const res = await fetch('/api/date');
+      const newDate = await res.text();
+      setDate(newDate);
+    }
+    getDate();
 
     const keyInfoString = localStorage.getItem('KEY_INFO_STRING');
     if (keyInfoString) {
@@ -54,7 +60,7 @@ function Index() {
       return;
     }
 
-    const res = await fetch('/api/hose/staff', {
+    const res = await fetch('/api/staff', {
       method: 'POST', // or 'PUT'
       body: JSON.stringify({
           "baseUrl": document.referrer,
