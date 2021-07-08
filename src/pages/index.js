@@ -66,7 +66,7 @@ function Index() {
           "baseUrl": document.referrer,
           "appId": keyInfo.appId,
           "appSecret": keyInfo.appSecret,
-          "code": urlParams.code
+          "code": urlParams.hoseCode
       }), // data can be `string` or {object}!
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ function Index() {
       <p></p>
 
       {
-        urlParams.code ? (<button onClick={getHoseUserInfo}>已有code</button>) : (<button onClick={jumpHose}>获取用户信息</button>)
+        urlParams.hoseCode ? (<button onClick={getHoseUserInfo}>已有code</button>) : (<button onClick={jumpHose}>获取用户信息</button>)
       }
     </main>
   );
