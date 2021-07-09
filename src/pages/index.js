@@ -4,7 +4,7 @@ import { getUrlParams } from '../../gatsby-browser';
 import '../styles/index.css';
 
 function Index() {
-  const [keyInfo, setKeyInfo] = useState({appId: '', appSecret: '', corpId: ''});
+  const [keyInfo, setKeyInfo] = useState({appId: '', appSecret: '', corpId: '', baseUrl: ''});
   const isSSR = typeof window === "undefined"
 
   const urlParams = !isSSR ? getUrlParams(): {};
@@ -45,27 +45,31 @@ function Index() {
     handleChange('corpId', event.target.value);
   }
 
+  function handleChangeBaseUrl (event) {
+    handleChange('baseUrl', event.target.value);
+  }
+
   function jumpHose () {
-    if (!keyInfo.corpId) {
-      alert('corpId不能为空');
+    if (!keyInfo.corpId || !keyInfo.baseUrl) {
+      alert('baseUrl与corpId不能为空');
       return;
     }
 
     console.log('jump to hose', document.referrer);
-    window.location = `${document.referrer}api/openapi/v3/auth/redirect?redirectUrl=${window.location}&corpId=${keyInfo.corpId}`;
+    window.location = `${keyInfo.baseUrl}api/openapi/v3/auth/redirect?redirectUrl=${window.location}&corpId=${keyInfo.corpId}`;
   }
 
   async function getHoseUserInfo () {
     console.log('do getHoseUserInfo', keyInfo);
     if (!keyInfo.appId || !keyInfo.appSecret || !keyInfo.corpId) {
-      alert('corpId 与 appId 与 appSecret不能为空');
+      alert('baseUrl与corpId 与 appId 与 appSecret不能为空');
       return;
     }
 
     const res = await fetch('/api/staff', {
       method: 'POST', // or 'PUT'
       body: JSON.stringify({
-          "baseUrl": document.referrer,
+          "baseUrl": keyInfo.baseUrl,
           "appId": keyInfo.appId,
           "appSecret": keyInfo.appSecret,
           "code": urlParams.hoseCode
@@ -83,9 +87,11 @@ function Index() {
         <title>平台跳转测试</title>
       </Helmet>
 
-      AppId: <input value={keyInfo.corpId} onChange={handleChangeCorpId}></input>
+      待跳转平台地址: <input value={keyInfo.baseUrl} onChange={handleChangeBaseUrl}></input>
       <p></p>
-      AppId: <input value={keyInfo.appId} onChange={handleChangeAppId}></input>
+      企业 ID: <input value={keyInfo.corpId} onChange={handleChangeCorpId}></input>
+      <p></p>
+      AppKey: <input value={keyInfo.appId} onChange={handleChangeAppId}></input>
       <p></p>
       AppSecret: <input value={keyInfo.appSecret} onChange={handleChangeAppSecret}></input>
       <p></p>
