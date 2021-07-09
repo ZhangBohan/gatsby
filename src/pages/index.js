@@ -79,7 +79,7 @@ function Index() {
       })
     })
     console.log('getHoseUserInfo', res)
-    alert(`返回。状态：${res.status}. 正文：${res.body}`)
+    alert(`返回。状态：${res.status}. 正文：${JSON.stringify(res.body())}`)
   }
 
   return (
