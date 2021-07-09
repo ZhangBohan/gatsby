@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { getUrlParams } from '../../gatsby-browser';
 import '../styles/index.css';
+import axios from 'axios';
 
 function Index() {
   const [keyInfo, setKeyInfo] = useState({appId: '', appSecret: '', corpId: '', baseUrl: ''});
@@ -66,20 +67,14 @@ function Index() {
       return;
     }
 
-    const res = await fetch('/api/staff', {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify({
-          "baseUrl": keyInfo.baseUrl,
-          "appId": keyInfo.appId,
-          "appSecret": keyInfo.appSecret,
-          "code": urlParams.hoseCode
-      }), // data can be `string` or {object}!
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
+    const res = await axios.post('/api/staff', {
+      "baseUrl": keyInfo.baseUrl,
+      "appId": keyInfo.appId,
+      "appSecret": keyInfo.appSecret,
+      "code": urlParams.hoseCode
     })
     console.log('getHoseUserInfo', res)
-    alert(`返回。状态：${res.status}. 正文：${JSON.stringify(res.text())}`)
+    alert(`返回。状态：${res.status}. 正文：${JSON.stringify(res.data)}`)
   }
 
   return (
