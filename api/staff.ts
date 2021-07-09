@@ -1,7 +1,9 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+
 const axios = require('axios');
 
-export default async (req, res) => {
+
+export default async (req: VercelRequest, res: VercelResponse) => {
     console.log(req.body);
     const { baseUrl, appId, appSecret, code } = req.body;
 
