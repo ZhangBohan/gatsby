@@ -27,7 +27,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         res.status(200).send(staffRes.data);
     } catch (e) {
         console.error('e', e);
-        res.status(500).send(e);
+        res.status(500).send(e.data);
     }
     
 };
