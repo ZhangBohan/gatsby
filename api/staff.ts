@@ -17,7 +17,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         const token = tokenRes.data.value.accessToken;
 
         const staffRes = await axios({
-            method: 'post',
+            method: 'get',
             url: `${baseUrl}api/openapi/v3/auth/redirect/\$${code}`,
             params: {
                 accessToken: token
