@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { Helmet } from 'react-helmet';
 import { getUrlParams } from '../../gatsby-browser';
 import '../styles/index.css';
 import axios from 'axios';
+
+const Content = () => (
+  <GitHubForkRibbon href="https://github.com/ZhangBohan/gatsby"
+                    target="_blank"
+                    position="right">
+    Fork me on GitHub
+  </GitHubForkRibbon>
+);
 
 function Index() {
   const [keyInfo, setKeyInfo] = useState({appId: '', appSecret: '', corpId: '', baseUrl: ''});
@@ -79,6 +88,7 @@ function Index() {
 
   return (
     <main>
+      <Content />
       <Helmet>
         <title>平台跳转测试</title>
       </Helmet>
